@@ -104,7 +104,7 @@ comandos a partir do `module:enable`.
 
 ## Configuração
 
-**Lojas › Configuração › Vendas › Escanear cartão**
+**Lojas › Configuração › Vendas › Escanear cartão** (em inglês: Stores › Configuration › Sales › Card Scanner)
 
 | Opção | Padrão | O que faz |
 |---|---|---|
