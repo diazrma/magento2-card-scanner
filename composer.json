@@ -1,5 +1,5 @@
 {
-    "name": "rodrigocardoso/module-card-scanner",
+    "name": "kingofpanda/module-card-scanner",
     "description": "Magento 2: escaneie o cartão pela câmera no checkout e preencha os campos de qualquer método de pagamento. OCR 100% no navegador (Tesseract.js).",
     "type": "magento2-module",
     "license": "MIT",

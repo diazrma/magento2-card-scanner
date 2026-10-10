@@ -91,7 +91,7 @@ Testado com:
 Via Composer:
 
 ```bash
-composer require rodrigocardoso/module-card-scanner
+composer require kingofpanda/module-card-scanner
 bin/magento module:enable MagePanda_CardScanner
 bin/magento setup:upgrade
 bin/magento setup:di:compile            # em produção
