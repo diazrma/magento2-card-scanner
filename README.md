@@ -84,7 +84,8 @@ Testado com:
 - Magento Open Source / Adobe Commerce 2.4.x. Testado no **2.4.9** com PHP 8.5.
 - **HTTPS** na loja: o navegador só libera a câmera em HTTPS (ou em `localhost`).
 - Funciona com a CSP restrita do checkout do 2.4.7+: o worker do OCR é servido como arquivo
-  estático, sem `blob:`.
+  estático e a foto enviada é decodificada com `createImageBitmap`, sem `blob:`.
+- Sem HTTPS a câmera ao vivo não abre, mas o envio de foto funciona.
 
 ## Instalação
 

@@ -33,6 +33,40 @@ define([
         return (n < 10 ? '0' : '') + n;
     }
 
+    /**
+     * Decodifica a foto sem <img src="blob:">: a CSP do checkout (img-src sem blob:) bloquearia
+     * e o onload nunca dispararia. createImageBitmap não passa pela CSP; data: é permitido no img-src.
+     * @param {File} file
+     * @returns {Promise<CanvasImageSource>}
+     */
+    function decodePhoto(file) {
+        if (window.createImageBitmap) {
+            return window.createImageBitmap(file).catch(function () {
+                return decodeAsDataUrl(file);
+            });
+        }
+
+        return decodeAsDataUrl(file);
+    }
+
+    function decodeAsDataUrl(file) {
+        return new Promise(function (resolve, reject) {
+            var reader = new FileReader();
+
+            reader.onerror = reject;
+            reader.onload = function () {
+                var img = new Image();
+
+                img.onload = function () {
+                    resolve(img);
+                };
+                img.onerror = reject;
+                img.src = reader.result;
+            };
+            reader.readAsDataURL(file);
+        });
+    }
+
     /** Área da moldura em coordenadas do vídeo (a moldura é 86% da largura visível, centralizada). */
     function guideCrop(video) {
         var vw = video.videoWidth,
@@ -253,34 +287,32 @@ define([
         }
 
         fileInput.addEventListener('change', function () {
-            var file = fileInput.files && fileInput.files[0],
-                img;
+            var file = fileInput.files && fileInput.files[0];
 
             if (!file) {
                 return;
             }
             stopCamera();
             setStatus($t('Reading photo...'));
-            img = new Image();
-            img.onload = function () {
-                ocr.recognize(img, null).then(function (text) {
-                    var single = new parser.Accumulator(1),
-                        res;
-
-                    URL.revokeObjectURL(img.src);
-                    single.add(parser.parse(text));
-                    res = single.result();
-                    if (res) {
-                        confirm(res);
-                    } else {
-                        setStatus($t('No valid card number found in the photo. Try another photo, closer and without reflections.'));
-                    }
-                }, function () {
-                    setStatus($t('Could not read the card.'));
-                });
-            };
-            img.src = URL.createObjectURL(file);
             fileInput.value = '';
+            decodePhoto(file).then(function (img) {
+                return ocr.recognize(img, null, function (p) {
+                    setStatus($t('Loading card reader...') + ' ' + Math.round(p * 100) + '%');
+                });
+            }).then(function (text) {
+                var single = new parser.Accumulator(1),
+                    res;
+
+                single.add(parser.parse(text));
+                res = single.result();
+                if (res) {
+                    confirm(res);
+                } else {
+                    setStatus($t('No valid card number found in the photo. Try another photo, closer and without reflections.'));
+                }
+            }, function () {
+                setStatus($t('Could not read the card.'));
+            });
         });
         cancelBtn.addEventListener('click', function () {
             close(null);
