@@ -1,0 +1,21 @@
+{
+    "name": "rodrigocardoso/module-card-scanner",
+    "description": "Magento 2: escaneie o cartão pela câmera no checkout e preencha os campos de qualquer método de pagamento. OCR 100% no navegador (Tesseract.js).",
+    "type": "magento2-module",
+    "license": "MIT",
+    "keywords": ["magento2", "magento", "adobe-commerce", "checkout", "credit-card", "ocr", "card-scanner", "tesseract"],
+    "authors": [
+        {"name": "Rodrigo Cardoso", "homepage": "https://github.com/diazrma"}
+    ],
+    "require": {
+        "php": "~8.2.0||~8.3.0||~8.4.0||~8.5.0",
+        "magento/framework": "*",
+        "magento/module-checkout": "*",
+        "magento/module-payment": "*",
+        "magento/module-store": "*"
+    },
+    "autoload": {
+        "files": ["registration.php"],
+        "psr-4": {"MagePanda\\CardScanner\\": ""}
+    }
+}

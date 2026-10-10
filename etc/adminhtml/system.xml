@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <section id="magepanda_cardscanner" translate="label" sortOrder="410" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>Escanear cartão</label>
+            <tab>sales</tab>
+            <resource>MagePanda_CardScanner::config</resource>
+            <group id="general" translate="label comment" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Geral</label>
+                <comment><![CDATA[Adiciona o botão "Escanear cartão" nos métodos de pagamento que exibem campos de cartão no próprio checkout. A leitura (OCR) acontece no navegador do cliente: a imagem não é enviada nem armazenada. Campos de cartão dentro de iframe do gateway (hosted fields) não podem ser preenchidos por nenhum módulo.]]></comment>
+                <field id="enabled" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Ativo</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="show_on_desktop" translate="label comment" type="select" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Mostrar no desktop</label>
+                    <comment>No desktop o cliente pode usar a webcam ou enviar uma foto. Com "Não", o botão aparece só em telas touch.</comment>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <depends><field id="enabled">1</field></depends>
+                </field>
+                <field id="allowed_methods" translate="label comment" type="multiselect" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Somente nestes métodos</label>
+                    <comment>Nenhum selecionado = todos os métodos em que forem encontrados campos de cartão.</comment>
+                    <source_model>Magento\Payment\Model\Config\Source\Allmethods</source_model>
+                    <can_be_empty>1</can_be_empty>
+                    <depends><field id="enabled">1</field></depends>
+                </field>
+                <field id="native_autocomplete" translate="label comment" type="select" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Ativar autocomplete nativo do navegador</label>
+                    <comment>Marca os campos com autocomplete="cc-number", "cc-exp"… Isso libera o preenchimento e o scan nativos do Safari (iOS) e do Chrome (Android).</comment>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <depends><field id="enabled">1</field></depends>
+                </field>
+                <field id="button_label" translate="label comment" type="text" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Texto do botão</label>
+                    <comment>Vazio = "Escanear cartão".</comment>
+                    <depends><field id="enabled">1</field></depends>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>

@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <magepanda_cardscanner>
+            <general>
+                <enabled>1</enabled>
+                <show_on_desktop>1</show_on_desktop>
+                <native_autocomplete>1</native_autocomplete>
+                <allowed_methods/>
+                <button_label/>
+            </general>
+        </magepanda_cardscanner>
+    </default>
+</config>

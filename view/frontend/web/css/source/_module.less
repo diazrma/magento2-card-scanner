@@ -1,0 +1,177 @@
+// MagePanda_CardScanner — botão no checkout + tela do scanner
+
+.mp-cardscan-trigger {
+    margin: 0 0 15px;
+
+    &__button.action.secondary {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 9px 16px;
+        border-radius: 999px;
+        font-weight: 600;
+    }
+
+    &__icon {
+        width: 20px;
+        height: 14px;
+        border: 2px solid currentColor;
+        border-radius: 3px;
+        position: relative;
+        box-sizing: border-box;
+
+        &::after {
+            content: '';
+            position: absolute;
+            left: 2px;
+            right: 2px;
+            top: 3px;
+            height: 2px;
+            background: currentColor;
+        }
+    }
+
+    &__note:not(:empty) {
+        margin: 8px 0 0;
+        color: #006400;
+        font-size: 1.3rem;
+    }
+}
+
+body.mp-cardscan-open {
+    overflow: hidden;
+}
+
+.mp-cardscan {
+    position: fixed;
+    inset: 0;
+    z-index: 100000;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    padding: 16px;
+    background: rgba(10, 12, 16, .96);
+    color: #fff;
+    text-align: center;
+
+    &__stage {
+        position: relative;
+        width: 100%;
+        max-width: 720px;
+        aspect-ratio: 4 / 3;
+        border-radius: 14px;
+        overflow: hidden;
+        background: #000;
+    }
+
+    &__video {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+    }
+
+    // Moldura no formato do cartão (ID-1), 86% da largura visível
+    &__guide {
+        position: absolute;
+        left: 7%;
+        right: 7%;
+        top: 50%;
+        transform: translateY(-50%);
+        aspect-ratio: 85.6 / 53.98;
+        max-height: 90%;
+        margin: 0 auto;
+        border-radius: 12px;
+        box-shadow: 0 0 0 9999px rgba(0, 0, 0, .45);
+        outline: 2px dashed rgba(255, 255, 255, .55);
+
+        span {
+            position: absolute;
+            width: 26px;
+            height: 26px;
+            border: 4px solid #4ade80;
+
+            &:nth-child(1) { top: -2px; left: -2px; border-right: 0; border-bottom: 0; border-top-left-radius: 12px; }
+            &:nth-child(2) { top: -2px; right: -2px; border-left: 0; border-bottom: 0; border-top-right-radius: 12px; }
+            &:nth-child(3) { bottom: -2px; left: -2px; border-right: 0; border-top: 0; border-bottom-left-radius: 12px; }
+            &:nth-child(4) { bottom: -2px; right: -2px; border-left: 0; border-top: 0; border-bottom-right-radius: 12px; }
+        }
+    }
+
+    &__status {
+        margin: 0;
+        font-size: 1.6rem;
+        min-height: 2.4em;
+    }
+
+    &__actions,
+    &__confirm {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 10px;
+    }
+
+    &__file {
+        position: relative;
+        display: inline-flex;
+        align-items: center;
+        padding: 7px 15px;
+        border: 1px solid #cdcdcd;
+        border-radius: 3px;
+        background: #fff;
+        color: #1f2328;
+        font-weight: 600;
+        line-height: 2rem;
+        cursor: pointer;
+    }
+
+    &__file-input {
+        position: absolute;
+        inset: 0;
+        opacity: 0;
+        cursor: pointer;
+    }
+
+    &__confirm {
+        flex-direction: column;
+        align-items: stretch;
+        width: 100%;
+        max-width: 420px;
+        padding: 18px;
+        border-radius: 14px;
+        background: #fff;
+        color: #1f2328;
+        text-align: left;
+
+        dl {
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: 6px 14px;
+            margin: 0 0 4px;
+        }
+
+        dt { font-weight: 600; margin: 0; }
+        dd { margin: 0; font-family: monospace; font-size: 1.7rem; word-break: break-all; }
+    }
+
+    &__hint {
+        margin: 0;
+        font-size: 1.3rem;
+        color: #59636e;
+    }
+
+    &__privacy {
+        margin: 0;
+        max-width: 520px;
+        font-size: 1.2rem;
+        opacity: .7;
+    }
+
+    .action.secondary {
+        background: #fff;
+        color: #1f2328;
+    }
+}

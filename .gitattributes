@@ -1,0 +1,5 @@
+# Fora do pacote baixado pelo composer (continuam no GitHub)
+/docs export-ignore
+/Test export-ignore
+/.gitattributes export-ignore
+*.gz binary
