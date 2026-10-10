@@ -14,10 +14,24 @@ use Magento\Store\Model\StoreManagerInterface;
  */
 class CheckoutConfigProvider implements ConfigProviderInterface
 {
-    public function __construct(
-        private readonly Config $config,
-        private readonly StoreManagerInterface $storeManager
-    ) {
+    /**
+     * @var Config
+     */
+    private $config;
+
+    /**
+     * @var StoreManagerInterface
+     */
+    private $storeManager;
+
+    /**
+     * @param Config $config
+     * @param StoreManagerInterface $storeManager
+     */
+    public function __construct(Config $config, StoreManagerInterface $storeManager)
+    {
+        $this->config = $config;
+        $this->storeManager = $storeManager;
     }
 
     public function getConfig(): array

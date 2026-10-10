@@ -15,14 +15,20 @@ use PHPUnit\Framework\TestCase;
 
 class CheckoutConfigProviderTest extends TestCase
 {
-    /** @var array<string, string|null> */
-    private array $values = [];
+    /**
+     * @var array<string, string|null>
+     */
+    private $values = [];
 
     private function provider(): CheckoutConfigProvider
     {
         $scope = $this->createMock(ScopeConfigInterface::class);
-        $scope->method('getValue')->willReturnCallback(fn (string $path) => $this->values[$path] ?? null);
-        $scope->method('isSetFlag')->willReturnCallback(fn (string $path) => (bool)($this->values[$path] ?? false));
+        $scope->method('getValue')->willReturnCallback(function (string $path) {
+            return $this->values[$path] ?? null;
+        });
+        $scope->method('isSetFlag')->willReturnCallback(function (string $path) {
+            return (bool)($this->values[$path] ?? false);
+        });
 
         $store = $this->createMock(StoreInterface::class);
         $store->method('getId')->willReturn(1);

@@ -13,8 +13,17 @@ class Config
 {
     private const PATH = 'magepanda_cardscanner/general/';
 
-    public function __construct(private readonly ScopeConfigInterface $scopeConfig)
+    /**
+     * @var ScopeConfigInterface
+     */
+    private $scopeConfig;
+
+    /**
+     * @param ScopeConfigInterface $scopeConfig
+     */
+    public function __construct(ScopeConfigInterface $scopeConfig)
     {
+        $this->scopeConfig = $scopeConfig;
     }
 
     public function isEnabled(?int $storeId = null): bool
@@ -41,7 +50,9 @@ class Config
     {
         $value = (string)$this->scopeConfig->getValue(self::PATH . 'allowed_methods', ScopeInterface::SCOPE_STORE, $storeId);
 
-        return array_values(array_filter(array_map('trim', explode(',', $value)), 'strlen'));
+        return array_values(array_filter(array_map('trim', explode(',', $value)), function ($v) {
+            return $v !== '';
+        }));
     }
 
     public function getButtonLabel(?int $storeId = null): string
